@@ -13,7 +13,7 @@ export class Param {
   private _stats: any;
 
   public main = {
-    bgColor:{value:0xffffff, type:'color'},
+    bgColor:{value:0xe3e3e3, type:'color'},
   }
 
   constructor() {

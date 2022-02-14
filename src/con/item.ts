@@ -30,7 +30,7 @@ export class Item extends MyObject3D {
     this._topId = opt.topId || 0
 
     const geo = opt.geo
-    let col = ~~(this._id / 3) % 2 == 0 ? opt.col[this._isBottom ? 0 : 2] : opt.col[this._isBottom ? 1 : 3]
+    let col = ~~(this._id / 4) % 2 == 0 ? opt.col[this._isBottom ? 0 : 2] : opt.col[this._isBottom ? 1 : 3]
 
     let num = this._isBottom ? 4 : 1
     for(let i = 0; i < num; i++) {
@@ -82,13 +82,10 @@ export class Item extends MyObject3D {
 
     // 基本サイズ
     this.itemSize.x = baseSize * 0.5
-    this.itemSize.y = Func.instance.val(5, 10)
-
-    // すきま
-    const offset = 0
+    this.itemSize.y = Func.instance.val(10, 10)
 
     // 真ん中の
-    const centerSize = this.itemSize.x * 0.9
+    const centerSize = this.itemSize.x * 0.5
     let w = (this.itemSize.x - centerSize) * 0.5
     let h = this.itemSize.y
 
@@ -114,9 +111,9 @@ export class Item extends MyObject3D {
       this._mesh[3].position.y = 0
     } else {
       this._mesh.forEach((val) => {
-        const topW = (centerSize) / Conf.instance.TOP_ITEM_NUM
+        const topW = (centerSize / Conf.instance.TOP_ITEM_NUM)
         val.position.x = (topW * 0.5) + (this._topId * topW) - (topW * Conf.instance.TOP_ITEM_NUM * 0.5)
-        val.scale.set(topW - offset, h, centerSize)
+        val.scale.set(topW, h, centerSize)
       })
     }
   }

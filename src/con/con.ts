@@ -21,6 +21,7 @@ export class Con extends Canvas {
     super(opt);
 
     this._makeColors()
+    this._makeColors()
 
     this._heightEl = document.querySelector('.js-height')
 
@@ -134,21 +135,36 @@ export class Con extends Canvas {
   // 使用カラー作成
   // ------------------------------------
   private _makeColors():void {
-    this._colors = []
+    // this._colors = []
 
     const colA = new Color(Util.instance.random(0, 1), Util.instance.random(0, 1), Util.instance.random(0, 1))
-    const colB = new Color(Util.instance.random(0, 1), Util.instance.random(0, 1), Util.instance.random(0, 1))
-    const colC = new Color(Util.instance.random(0, 1), Util.instance.random(0, 1), Util.instance.random(0, 1))
+    const colB = new Color(1 - colA.r, 1 - colA.g, 1 - colA.b)
 
-    for(let i = 0; i < 100; i++) {
-        const colD = colA.clone()
-        this._colors.push(colD.lerp(colB, Util.instance.random(0, 1)))
+    const hslA = { h: 0, s: 0, l: 0 }
+    colA.getHSL(hslA)
 
-        const colE = colB.clone()
-        this._colors.push(colE.lerp(colC, Util.instance.random(0, 1)))
+    const hslB = { h: 0, s: 0, l: 0 }
+    colB.getHSL(hslB)
 
-        const colF = colC.clone()
-        this._colors.push(colF.lerp(colA, Util.instance.random(0, 1)))
+    const r = 0.2
+    for(let i = 0; i < 1; i++) {
+      const hslA = { h: 0, s: 0, l: 0 }
+      colA.getHSL(hslA)
+      hslA.s += Util.instance.range(r)
+      hslA.l += Util.instance.range(r)
+
+      const hslB = { h: 0, s: 0, l: 0 }
+      colB.getHSL(hslB)
+      hslB.s += Util.instance.range(r)
+      hslB.l += Util.instance.range(r)
+
+      const colC = new Color()
+      colC.setHSL(hslA.h, hslA.s, hslA.l)
+      this._colors.push(colC)
+
+      const colD = new Color()
+      colD.setHSL(hslB.h, hslB.s, hslB.l)
+      this._colors.push(colD)
     }
   }
 }
